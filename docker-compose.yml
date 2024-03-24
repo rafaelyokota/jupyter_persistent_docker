@@ -3,17 +3,21 @@ services:
   datascience-notebook:
     image: jupyter/datascience-notebook
     volumes:
-      - ./data:/home
+      - ./data/jovyan:/home/jovyan
+      - ./data/jupyternb:/home/jupyternb
     user: root
     environment:
       - NB_USER=jupyternb
       - NB_UID=1000
       - NB_GID=100
       - CHOWN_HOME=yes
+    shm_size: "32GB"
     ports:
       - 8888:8888
     deploy:
       resources:
+        limits:
+          memory: 32G
         reservations:
           devices:
             - driver: nvidia
